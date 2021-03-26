@@ -1,18 +1,20 @@
 clc;clear;close;
 addpath(genpath(pwd));
-%% 加载光场数据
-inputpath='F:\LFdata\additional\pens\';
+
+%% Data loading
+inputpath='.\Data\pens\';
 LFformat='png';
 LFData=loadLFData(inputpath,LFformat);
-%%
 load('Data\mypens.mat');
 uv_radius=9;
-%% 分割传递
-% 最近邻
+
+%% disparity transmission
+% Propagation of nearest neighbor interpolation
 % segLF= LFseg(myoutLabel, dispMap, uv_radius);
-% 双线性
+% Bilinear interpolation propagation
 segLF= LFsegBilinear(myoutLabel, dispMap, uv_radius);
 segLF2d = LF2remap(segLF);
-%%
+
+%% visual
 uvlabel=squeeze(segLF(8,3,:,:));
 figure,imshow(uvlabel,[]);
